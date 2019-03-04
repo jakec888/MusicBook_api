@@ -1,13 +1,13 @@
 
 class Song
-  attr_reader :song_name, :artist, :video_url, :contributor, :likes, :dislikes
+  attr_reader :song_name, :artist, :videoId, :contributor, :likes, :dislikes
 
   DB = PG.connect({:host => "localhost", :port => 5432, :dbname => 'MusicBook_api_development'})
 
   def initialize(opts = {}, id = nil)
     @song_name = opts["song_name"]
     @artist = opts["artist"]
-    @video_url = opts["video_url"]
+    @videoId = opts["videoId"]
     @contributor = opts["contributor"]
     @likes = likes.to_i
     @dislikes = dislikes.to_i
@@ -43,7 +43,7 @@ def self.find(id)
   return {
     "song_name" => results.first["song_name"],
     "artist" => results.first["artist"],
-    "video_url" => results.first["video_url"],
+    "videoId" => results.first["videoId"],
     "contributor" => results.first["contributor"],
     "likes" => results.first["likes"].to_i,
     "dislikes" => results.first["dislikes"].to_i
@@ -53,21 +53,21 @@ end
   def self.create(opts)
     results = DB.exec(
       <<-SQL
-        INSERT INTO songs (song_name, artist, video_url, contributor, likes, dislikes)
+        INSERT INTO songs (song_name, artist, videoId, contributor, likes, dislikes)
         VALUES (
           '#{opts["song_name"]}',
           '#{opts["artist"]}',
-          '#{opts["video_url"]}',
+          '#{opts["videoId"]}',
           '#{opts["contributor"]}',
           #{opts["likes"]},
           #{opts["dislikes"]})
-          RETURNING song_name, artist, video_url, contributor, likes, dislikes, id;
+          RETURNING song_name, artist, videoId, contributor, likes, dislikes, id;
       SQL
     )
     return {
       "song_name" => results.first["song_name"],
       "artist" => results.first["artist"],
-      "video_url" => results.first["video_url"],
+      "videoId" => results.first["videoId"],
       "contributor" => results.first["contributor"],
       "likes" => results.first["likes"].to_i,
       "dislikes" => results.first["dislikes"].to_i
@@ -92,18 +92,18 @@ end
         UPDATE songs
         SET song_name='#{opts["song_name"]}',
             artist='#{opts["artist"]}',
-            video_url='#{opts["video_url"]}',
+            videoId='#{opts["videoId"]}',
             contributor='#{opts["contributor"]}',
             likes=#{opts["likes"]},
             dislikes=#{opts["dislikes"]}
             WHERE id=#{id}
-          RETURNING song_name, artist, video_url, contributor, likes, dislikes, id;
+          RETURNING song_name, artist, videoId, contributor, likes, dislikes, id;
       SQL
     )
     return {
       "song_name" => results.first["song_name"],
       "artist" => results.first["artist"],
-      "video_url" => results.first["video_url"],
+      "videoId" => results.first["videoId"],
       "contributor" => results.first["contributor"],
       "likes" => results.first["likes"].to_i,
       "dislikes" => results.first["dislikes"].to_i
