@@ -1,19 +1,17 @@
 
 class Song
-<<<<<<< HEAD
+=======
   attr_reader :song_name, :artist, :videoId, :contributor, :likes, :dislikes
 
-  DB = PG.connect({:host => "localhost", :port => 5432, :dbname => 'MusicBook_api_development'})
+  # def initialize(opts = {}, id = nil)
+  #    @song_name = opts["song_name"]
+  #    @artist = opts["artist"]
+  #    @videoId = opts["videoId"]
+  #    @contributor = opts["contributor"]
+  #    @likes = likes.to_i
+  #    @dislikes = dislikes.to_i
+  #    @id =id.to_i
 
-  def initialize(opts = {}, id = nil)
-    @song_name = opts["song_name"]
-    @artist = opts["artist"]
-    @videoId = opts["videoId"]
-    @contributor = opts["contributor"]
-    @likes = likes.to_i
-    @dislikes = dislikes.to_i
-    @id =id.to_i
-=======
   if(ENV['DATABASE_URL'])
     uri = URI.parse(ENV['DATABASE_URL'])
     DB = PG.connect(uri.hostnsme, uri.port, nil, nil, uri.path[1..-1], uri.user, uri.password)
@@ -37,7 +35,8 @@ def self.all
       "videoId" => result["videoId"],
       "contributor" => result["contributor"],
       "likes" => result["likes"].to_i,
-      "dislikes" => result["dislikes"].to_i
+      "dislikes" => result["dislikes"].to_i,
+      "id" => result["id"].to_i
     }
   end
 end
