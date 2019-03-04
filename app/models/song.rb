@@ -1,6 +1,6 @@
 
 class Song
-=======
+
   attr_reader :song_name, :artist, :videoId, :contributor, :likes, :dislikes
 
   # def initialize(opts = {}, id = nil)
@@ -17,7 +17,6 @@ class Song
     DB = PG.connect(uri.hostnsme, uri.port, nil, nil, uri.path[1..-1], uri.user, uri.password)
   else
     DB = PG.connect({:host => "localhost", :port => 5432, :dbname => 'MusicBook_api_development'})
->>>>>>> 77834928a53d016c7b99ce4151f45b0cb9944ed3
   end
 
 
