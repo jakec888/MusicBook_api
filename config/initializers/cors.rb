@@ -7,7 +7,11 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
+<<<<<<< HEAD
     origins 'localhost:3001'
+=======
+    origins 'localhost:3001','https://git.heroku.com/music-book-react.git'
+>>>>>>> 77834928a53d016c7b99ce4151f45b0cb9944ed3
 
     resource '*',
       headers: :any,
