@@ -1,12 +1,12 @@
 
 class Song
 
-  attr_reader :song_name, :artist, :videoId, :contributor, :likes, :dislikes
+  attr_reader :song_name, :artist, :videoid, :contributor, :likes, :dislikes
 
   # def initialize(opts = {}, id = nil)
   #    @song_name = opts["song_name"]
   #    @artist = opts["artist"]
-  #    @videoId = opts["videoId"]
+  #    @videoid = opts["videoid"]
   #    @contributor = opts["contributor"]
   #    @likes = likes.to_i
   #    @dislikes = dislikes.to_i
@@ -31,7 +31,7 @@ def self.all
     {
       "song_name" => result["song_name"],
       "artist" => result["artist"],
-      "videoId" => result["videoId"],
+      "videoid" => result["videoid"],
       "contributor" => result["contributor"],
       "likes" => result["likes"].to_i,
       "dislikes" => result["dislikes"].to_i,
@@ -51,7 +51,7 @@ def self.find(id)
   return {
     "song_name" => results.first["song_name"],
     "artist" => results.first["artist"],
-    "videoId" => results.first["videoId"],
+    "videoid" => results.first["videoid"],
     "contributor" => results.first["contributor"],
     "likes" => results.first["likes"].to_i,
     "dislikes" => results.first["dislikes"].to_i
@@ -61,21 +61,21 @@ end
   def self.create(opts)
     results = DB.exec(
       <<-SQL
-        INSERT INTO songs (song_name, artist, videoId, contributor, likes, dislikes)
+        INSERT INTO songs (song_name, artist, videoid, contributor, likes, dislikes)
         VALUES (
           '#{opts["song_name"]}',
           '#{opts["artist"]}',
-          '#{opts["videoId"]}',
+          '#{opts["videoid"]}',
           '#{opts["contributor"]}',
           #{opts["likes"]},
           #{opts["dislikes"]})
-          RETURNING song_name, artist, videoId, contributor, likes, dislikes, id;
+          RETURNING song_name, artist, videoid, contributor, likes, dislikes, id;
       SQL
     )
     return {
       "song_name" => results.first["song_name"],
       "artist" => results.first["artist"],
-      "videoId" => results.first["videoId"],
+      "videoid" => results.first["videoid"],
       "contributor" => results.first["contributor"],
       "likes" => results.first["likes"].to_i,
       "dislikes" => results.first["dislikes"].to_i
@@ -100,18 +100,18 @@ end
         UPDATE songs
         SET song_name='#{opts["song_name"]}',
             artist='#{opts["artist"]}',
-            videoId='#{opts["videoId"]}',
+            videoid='#{opts["videoid"]}',
             contributor='#{opts["contributor"]}',
             likes=#{opts["likes"]},
             dislikes=#{opts["dislikes"]}
             WHERE id=#{id}
-          RETURNING song_name, artist, videoId, contributor, likes, dislikes, id;
+          RETURNING song_name, artist, videoid, contributor, likes, dislikes, id;
       SQL
     )
     return {
       "song_name" => results.first["song_name"],
       "artist" => results.first["artist"],
-      "videoId" => results.first["videoId"],
+      "videoid" => results.first["videoid"],
       "contributor" => results.first["contributor"],
       "likes" => results.first["likes"].to_i,
       "dislikes" => results.first["dislikes"].to_i
